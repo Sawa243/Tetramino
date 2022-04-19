@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tetris.R
 import com.example.tetris.databinding.FragmentGameBinding
+import com.example.tetris.helpers.Motions
 import com.example.tetris.models.AppModel
 import com.example.tetris.storage.AppPreferences
 import com.example.tetris.view.TetrisView
@@ -48,13 +49,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private fun onTetrisViewTouch(view: View, event: MotionEvent): Boolean {
         if (appModel.isGameOver() || appModel.isGameAwaitingStart()) {
             appModel.startGame()
-            tetrisView.setGameCommandWithDelay(AppModel.Motions.DOWN)
+            tetrisView.setGameCommandWithDelay(Motions.DOWN)
         } else if (appModel.isGameActive()) {
             when (resolveTouchDirection(view, event)) {
-                0 -> moveTetromino(AppModel.Motions.LEFT)
-                1 -> moveTetromino(AppModel.Motions.ROTATE)
-                2 -> moveTetromino(AppModel.Motions.DOWN)
-                3 -> moveTetromino(AppModel.Motions.RIGHT)
+                0 -> moveTetromino(Motions.LEFT)
+                1 -> moveTetromino(Motions.ROTATE)
+                2 -> moveTetromino(Motions.DOWN)
+                3 -> moveTetromino(Motions.RIGHT)
             }
         }
         return true
@@ -71,7 +72,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         return direction
     }
 
-    private fun moveTetromino(motion: AppModel.Motions) {
+    private fun moveTetromino(motion: Motions) {
         if (appModel.isGameActive()) {
             tetrisView.setGameCommand(motion)
         }

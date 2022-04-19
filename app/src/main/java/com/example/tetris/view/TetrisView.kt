@@ -12,11 +12,18 @@ import android.view.View
 import com.example.tetris.constants.CellConstants
 import com.example.tetris.constants.FieldConstant
 import com.example.tetris.databinding.FragmentGameBinding
+import com.example.tetris.helpers.Dimension
+import com.example.tetris.helpers.Motions
+import com.example.tetris.helpers.Statuses
 import com.example.tetris.models.AppModel
 import com.example.tetris.models.Block
 import com.example.tetris.storage.AppPreferences
 
-class TetrisView : View {
+class TetrisView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
     private val paint = Paint()
     private var lastMove: Long = 0
@@ -27,18 +34,11 @@ class TetrisView : View {
     private var frameoffset: Dimension = Dimension(0, 0)
     private var appPreferences: AppPreferences? = null
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    )
-
     fun setModel(model: AppModel) {
         this.model = model
     }
 
-    fun setBinding(binding: FragmentGameBinding) {
+    fun setBinding(binding: FragmentGameBinding) { // переделать
         this._binding = binding
     }
 
@@ -46,11 +46,11 @@ class TetrisView : View {
         this.appPreferences = appPreferences
     }
 
-    fun setGameCommand(move: AppModel.Motions) {
+    fun setGameCommand(move: Motions) {
         if (null != model && (model?.currentState ==
-                    AppModel.Statuses.ACTIVE.name)
+                    Statuses.ACTIVE.name)
         ) {
-            if (AppModel.Motions.DOWN == move) {
+            if (Motions.DOWN == move) {
                 model?.generateField(move.name)
                 invalidate()
                 return
@@ -59,7 +59,7 @@ class TetrisView : View {
         }
     }
 
-    fun setGameCommandWithDelay(move: AppModel.Motions) {
+    fun setGameCommandWithDelay(move: Motions) {
         val now = System.currentTimeMillis()
         if (now - lastMove > DELAY) {
             model?.generateField(move.name)
@@ -133,9 +133,9 @@ class TetrisView : View {
     }
 
     companion object {
-        private val DELAY = 500
-        private val BLOCK_OFFSET = 2
-        private val FRAME_OFFSET_BASE = 10
+        private const val DELAY = 500
+        private const val BLOCK_OFFSET = 2
+        private const val FRAME_OFFSET_BASE = 10
     }
 
     private class ViewHandler(private val owner: TetrisView) : Handler() {
@@ -146,7 +146,7 @@ class TetrisView : View {
                         owner.model?.endGame()
                     }
                     if (owner.model!!.isGameActive()) {
-                        owner.setGameCommandWithDelay(AppModel.Motions.DOWN)
+                        owner.setGameCommandWithDelay(Motions.DOWN)
                     }
                 }
             }
@@ -158,5 +158,4 @@ class TetrisView : View {
         }
     }
 
-    private data class Dimension(val width: Int, val height: Int)
 }

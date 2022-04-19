@@ -4,7 +4,7 @@ import com.example.tetris.helpers.array2dOfByte
 
 class Frame(private val width: Int) {
 
-    val data: ArrayList<ByteArray> = ArrayList()
+    private val data: ArrayList<ByteArray> = ArrayList()
 
     fun addRow(byteStr: String): Frame {
         val row = ByteArray(byteStr.length)

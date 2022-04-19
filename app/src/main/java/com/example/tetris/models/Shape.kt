@@ -1,6 +1,7 @@
 package com.example.tetris.models
 
 enum class Shape(val frameCount: Int, val startPosition: Int) {
+
     Tetramino(2, 2) {
         override fun getFrame(frameNumber: Int): Frame {
             return when (frameNumber) {
@@ -49,21 +50,7 @@ enum class Shape(val frameCount: Int, val startPosition: Int) {
             }
         }
     },
-    Tetramino4(2, 2) {
-        override fun getFrame(frameNumber: Int): Frame {
-            return when (frameNumber) {
-                0 -> Frame(4)
-                    .addRow("1111")
-                1 -> Frame(1)
-                    .addRow("1")
-                    .addRow("1")
-                    .addRow("1")
-                    .addRow("1")
-                else -> throw IllegalArgumentException("$frameNumber is an invalid frame number.")
-            }
-        }
-    },
-    Tetramino5(4, 1) {
+    Tetramino4(4, 1) {
         override fun getFrame(frameNumber: Int): Frame {
             return when (frameNumber) {
                 0 -> Frame(3)
@@ -84,7 +71,7 @@ enum class Shape(val frameCount: Int, val startPosition: Int) {
             }
         }
     },
-    Tetramino6(4, 1) {
+    Tetramino5(4, 1) {
         override fun getFrame(frameNumber: Int): Frame {
             return when (frameNumber) {
                 0 -> Frame(3)
@@ -105,7 +92,7 @@ enum class Shape(val frameCount: Int, val startPosition: Int) {
             }
         }
     },
-    Tetramino7(4, 1) {
+    Tetramino6(4, 1) {
         override fun getFrame(frameNumber: Int): Frame {
             return when (frameNumber) {
                 0 -> Frame(3)

@@ -3,17 +3,18 @@ package com.example.tetris.models
 import android.graphics.Point
 import com.example.tetris.constants.CellConstants
 import com.example.tetris.constants.FieldConstant
+import com.example.tetris.helpers.Motions
+import com.example.tetris.helpers.Statuses
 import com.example.tetris.helpers.array2dOfByte
 import com.example.tetris.storage.AppPreferences
 
 class AppModel {
 
     var score: Int = 0
-    private var preferences: AppPreferences? = null
-
     var currentBlock: Block? = null
     var currentState: String = Statuses.AWAITING_START.name
 
+    private var preferences: AppPreferences? = null
     private var field: Array<ByteArray> = array2dOfByte(
         FieldConstant.ROW_COUNT.value,
         FieldConstant.COLUMN_COUNT.value
@@ -235,14 +236,6 @@ class AppModel {
             }
             true
         }
-    }
-
-    enum class Statuses {
-        AWAITING_START, ACTIVE, INACTIVE, OVER
-    }
-
-    enum class Motions {
-        LEFT, RIGHT, DOWN, ROTATE
     }
 
 }

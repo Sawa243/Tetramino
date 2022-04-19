@@ -30,20 +30,24 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         appPreferences = AppPreferences(requireContext())
         appModel.setPreferences(appPreferences)
-        tetrisView = binding.viewTetris
-        tetrisView.apply {
-            setBinding(binding)// переделать
-            setModel(appModel)
-            appPreferences?.let { setPreferences(it) }// переделать
-        }
+        initTetrisView()
 
-        tetrisView.setOnTouchListener(this::onTetrisViewTouch)
+        tetrisView.setOnTouchListener(this::onTetrisViewTouch) // переделать управление
         binding.btnRestart.setOnClickListener { btnRestartClick() }
 
         updateHighScore()
         updateCurrentScore()
 
         return binding.root
+    }
+
+    private fun initTetrisView() {
+        tetrisView = binding.viewTetris
+            .apply {
+                setBinding(binding)// переделать
+                setModel(appModel)
+                appPreferences?.let { setPreferences(it) }// переделать
+            }
     }
 
     private fun onTetrisViewTouch(view: View, event: MotionEvent): Boolean {
@@ -83,11 +87,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun updateHighScore() {
-        binding.tvHighScore.text = "${appPreferences?.getHighScore()}"
+        binding.tvHighScore.text = appPreferences?.getHighScore().toString()
     }
 
     private fun updateCurrentScore() {
-        binding.tvCurrentScore.text = "0"
+        binding.tvCurrentScore.text = getString(R.string.zero)
     }
 
     override fun onDestroyView() {

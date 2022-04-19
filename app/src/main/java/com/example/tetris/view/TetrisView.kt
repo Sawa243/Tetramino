@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
 import android.view.View
+import com.example.tetris.R
 import com.example.tetris.constants.CellConstants
 import com.example.tetris.constants.FieldConstant
 import com.example.tetris.databinding.FragmentGameBinding
@@ -119,7 +120,7 @@ class TetrisView @JvmOverloads constructor(
         super.onSizeChanged(width, height, previousWidth, preiviousHeight)
         val cellWidth = (width - 2 * FRAME_OFFSET_BASE) / FieldConstant.COLUMN_COUNT.value
         val cellHeight = (height - 2 * FRAME_OFFSET_BASE) / FieldConstant.ROW_COUNT.value
-        val n = Math.min(cellWidth, cellHeight)
+        val n = cellWidth.coerceAtMost(cellHeight)
         this.cellSize = Dimension(n, n)
         val offsetX = (width - FieldConstant.COLUMN_COUNT.value * n) / 2
         val offsetY = (height - FieldConstant.ROW_COUNT.value * n) / 2
@@ -127,9 +128,8 @@ class TetrisView @JvmOverloads constructor(
     }
 
     private fun updateScore() {
-        _binding?.tvCurrentScore?.text = "${model?.score}"
-        _binding?.tvHighScore?.text =
-            "${appPreferences?.getHighScore()}"
+        _binding?.tvCurrentScore?.text = model?.score.toString()
+        _binding?.tvHighScore?.text = appPreferences?.getHighScore().toString()
     }
 
     companion object {

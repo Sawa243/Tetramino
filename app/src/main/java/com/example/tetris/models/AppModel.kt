@@ -128,7 +128,7 @@ class AppModel {
     }
 
     private fun persistCellData() {
-        for (i in 0 until field.size) {
+        for (i in field.indices) {
             for (j in 0 until field[i].size) {
                 var status = getCellStatus(i, j)
                 if (status == CellConstants.EPHEMERAL.value) {
@@ -140,7 +140,7 @@ class AppModel {
     }
 
     private fun assessField() {
-        for (i in 0 until field.size) {
+        for (i in field.indices) {
             var emptyCells = 0
             for (j in 0 until field[i].size) {
                 val status = getCellStatus(i, j)
@@ -223,7 +223,7 @@ class AppModel {
         } else if (position.x + shape[0].size > FieldConstant.COLUMN_COUNT.value) {
             false
         } else {
-            for (i in 0 until shape.size) {
+            for (i in shape.indices) {
                 for (j in 0 until shape[i].size) {
                     val y = position.y + i
                     val x = position.x + j

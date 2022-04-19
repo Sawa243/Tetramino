@@ -41,7 +41,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun updateHighScore() {
-        binding.tvHighScore.text = "High score: ${preferences.getHighScore()}"
+        binding.tvHighScore.text =
+            getString(R.string.high_score_with_score, preferences.getHighScore())
     }
 
     private fun onBtnExitClick() {
@@ -54,7 +55,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun onBtnResetScoreClick(view: View) {
         preferences.clearHighScore()
-        Snackbar.make(view, getText(R.string.score_successfully_reset), Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, getText(R.string.score_successfully_reset), Snackbar.LENGTH_SHORT)
+            .show()
         updateHighScore()
     }
 

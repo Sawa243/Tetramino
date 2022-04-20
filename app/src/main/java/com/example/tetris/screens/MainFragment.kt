@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.tetris.R
-import com.example.tetris.databinding.FragmentMainBinding
+import com.example.tetris.databinding.FragmentMainTetrisBinding
 import com.example.tetris.storage.AppPreferences
 import com.google.android.material.snackbar.Snackbar
 import kotlin.system.exitProcess
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main_tetris) {
 
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: FragmentMainTetrisBinding? = null
     private val binding get() = _binding!!
     private lateinit var preferences: AppPreferences
 
@@ -22,7 +22,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainTetrisBinding.inflate(inflater, container, false)
 
         preferences = AppPreferences(requireContext())
 

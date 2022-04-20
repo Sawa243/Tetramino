@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tetris.R
-import com.example.tetris.databinding.FragmentGameBinding
+import com.example.tetris.databinding.FragmentGameTetrisBinding
 import com.example.tetris.helpers.Motions
 import com.example.tetris.models.AppModel
 import com.example.tetris.storage.AppPreferences
 import com.example.tetris.view.TetrisView
 
-class GameFragment : Fragment(R.layout.fragment_game) {
+class GameFragment : Fragment(R.layout.fragment_game_tetris) {
 
-    private var _binding: FragmentGameBinding? = null
+    private var _binding: FragmentGameTetrisBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var tetrisView: TetrisView
@@ -27,7 +27,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = FragmentGameTetrisBinding.inflate(inflater, container, false)
 
         appPreferences = AppPreferences(requireContext())
         appModel.setPreferences(appPreferences)

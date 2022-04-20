@@ -21,6 +21,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private lateinit var tetrisView: TetrisView
     private var appPreferences: AppPreferences? = null
     private val appModel: AppModel = AppModel()
+    private var callback: (score: String) -> Unit = {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +31,14 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         appPreferences = AppPreferences(requireContext())
         appModel.setPreferences(appPreferences)
+        initCallbackScore()
         initTetrisView()
 
         tetrisView.setOnTouchListener(this::onTetrisViewTouch) // переделать управление
         binding.btnRestart.setOnClickListener { btnRestartClick() }
 
         updateHighScore()
-        updateCurrentScore()
+        updateCurrentScore(getString(R.string.zero))
 
         return binding.root
     }
@@ -44,9 +46,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     private fun initTetrisView() {
         tetrisView = binding.viewTetris
             .apply {
-                setBinding(binding)// переделать
+                setCallbackForScore(callback)
                 setModel(appModel)
-                appPreferences?.let { setPreferences(it) }// переделать
             }
     }
 
@@ -76,6 +77,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         return direction
     }
 
+    private fun initCallbackScore() {
+        callback = {
+            updateCurrentScore(it)
+            updateHighScore()
+        }
+    }
+
     private fun moveTetromino(motion: Motions) {
         if (appModel.isGameActive()) {
             tetrisView.setGameCommand(motion)
@@ -90,8 +98,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         binding.tvHighScore.text = appPreferences?.getHighScore().toString()
     }
 
-    private fun updateCurrentScore() {
-        binding.tvCurrentScore.text = getString(R.string.zero)
+    private fun updateCurrentScore(score: String) {
+        binding.tvCurrentScore.text = score
     }
 
     override fun onDestroyView() {

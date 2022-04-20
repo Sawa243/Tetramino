@@ -9,16 +9,13 @@ import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
 import android.view.View
-import com.example.tetris.R
 import com.example.tetris.constants.CellConstants
 import com.example.tetris.constants.FieldConstant
-import com.example.tetris.databinding.FragmentGameBinding
 import com.example.tetris.helpers.Dimension
 import com.example.tetris.helpers.Motions
 import com.example.tetris.helpers.Statuses
 import com.example.tetris.models.AppModel
 import com.example.tetris.models.Block
-import com.example.tetris.storage.AppPreferences
 
 class TetrisView @JvmOverloads constructor(
     context: Context,
@@ -29,22 +26,17 @@ class TetrisView @JvmOverloads constructor(
     private val paint = Paint()
     private var lastMove: Long = 0
     private var model: AppModel? = null
-    private var _binding: FragmentGameBinding? = null
+    private var callbackScore: (currentScore: String) -> Unit = {}
     private val viewHandler = ViewHandler(this)
     private var cellSize: Dimension = Dimension(0, 0)
     private var frameoffset: Dimension = Dimension(0, 0)
-    private var appPreferences: AppPreferences? = null
 
     fun setModel(model: AppModel) {
         this.model = model
     }
 
-    fun setBinding(binding: FragmentGameBinding) { // переделать
-        this._binding = binding
-    }
-
-    fun setPreferences(appPreferences: AppPreferences) {
-        this.appPreferences = appPreferences
+    fun setCallbackForScore(callback: (currentScore: String) -> Unit) {
+        callbackScore = callback
     }
 
     fun setGameCommand(move: Motions) {
@@ -68,6 +60,7 @@ class TetrisView @JvmOverloads constructor(
             lastMove = now
         }
         updateScore()
+
         viewHandler.sleep(DELAY.toLong())
     }
 
@@ -128,8 +121,7 @@ class TetrisView @JvmOverloads constructor(
     }
 
     private fun updateScore() {
-        _binding?.tvCurrentScore?.text = model?.score.toString()
-        _binding?.tvHighScore?.text = appPreferences?.getHighScore().toString()
+        callbackScore.invoke(model?.score.toString())
     }
 
     companion object {

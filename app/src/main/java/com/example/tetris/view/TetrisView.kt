@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
 import android.view.View
@@ -130,7 +131,7 @@ class TetrisView @JvmOverloads constructor(
         private const val FRAME_OFFSET_BASE = 10
     }
 
-    private class ViewHandler(private val owner: TetrisView) : Handler() {
+    private class ViewHandler(private val owner: TetrisView) : Handler(Looper.getMainLooper()) {
         override fun handleMessage(message: Message) {
             if (message.what == 0) {
                 if (owner.model != null) {

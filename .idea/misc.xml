@@ -7,8 +7,10 @@
         <entry key="..\:/Kotlin/Tetris/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/Tetris/app/src/main/res/layout/fragment_game.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/Tetris/app/src/main/res/layout/fragment_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/collaboration/Tetramino/app/src/main/res/drawable/arrowBack48px.xml" value="0.289" />
+        <entry key="..\:/collaboration/Tetramino/app/src/main/res/drawable/arrow_back.xml" value="0.289" />
         <entry key="..\:/collaboration/Tetramino/app/src/main/res/layout/fragment_game.xml" value="0.33" />
-        <entry key="..\:/collaboration/Tetramino/app/src/main/res/layout/fragment_game_tetris.xml" value="0.5" />
+        <entry key="..\:/collaboration/Tetramino/app/src/main/res/layout/fragment_game_tetris.xml" value="0.33" />
         <entry key="..\:/collaboration/Tetramino/app/src/main/res/layout/fragment_main.xml" value="0.36666666666666664" />
         <entry key="..\:/collaboration/Tetramino/app/src/main/res/layout/fragment_main_tetris.xml" value="0.5" />
       </map>

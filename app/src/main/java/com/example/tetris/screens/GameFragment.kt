@@ -2,9 +2,9 @@ package com.example.tetris.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.tetris.R
 import com.example.tetris.databinding.FragmentGameTetrisBinding
@@ -34,13 +34,31 @@ class GameFragment : Fragment(R.layout.fragment_game_tetris) {
         initCallbackScore()
         initTetrisView()
 
-        tetrisView.setOnTouchListener(this::onTetrisViewTouch) // переделать управление
         binding.btnRestart.setOnClickListener { btnRestartClick() }
-
+        listOf(binding.btnBottom, binding.btnLeft, binding.btnTop, binding.btnRight).forEach {
+            it.setOnClickListener(::handleButtonClick)
+        }
+        startGame()
         updateHighScore()
         updateCurrentScore(getString(R.string.zero))
 
         return binding.root
+    }
+
+    private fun startGame() {
+        if (appModel.isGameOver() || appModel.isGameAwaitingStart()) {
+            appModel.startGame()
+            tetrisView.setGameCommandWithDelay(Motions.DOWN)
+        }
+    }
+
+    private fun handleButtonClick(view: View) {
+        when (view as Button) {
+            binding.btnLeft -> moveTetromino(Motions.LEFT)
+            binding.btnRight -> moveTetromino(Motions.RIGHT)
+            binding.btnBottom -> moveTetromino(Motions.DOWN)
+            binding.btnTop -> moveTetromino(Motions.ROTATE)
+        }
     }
 
     private fun initTetrisView() {
@@ -49,32 +67,6 @@ class GameFragment : Fragment(R.layout.fragment_game_tetris) {
                 setCallbackForScore(callback)
                 setModel(appModel)
             }
-    }
-
-    private fun onTetrisViewTouch(view: View, event: MotionEvent): Boolean {
-        if (appModel.isGameOver() || appModel.isGameAwaitingStart()) {
-            appModel.startGame()
-            tetrisView.setGameCommandWithDelay(Motions.DOWN)
-        } else if (appModel.isGameActive()) {
-            when (resolveTouchDirection(view, event)) {
-                0 -> moveTetromino(Motions.LEFT)
-                1 -> moveTetromino(Motions.ROTATE)
-                2 -> moveTetromino(Motions.DOWN)
-                3 -> moveTetromino(Motions.RIGHT)
-            }
-        }
-        return true
-    }
-
-    private fun resolveTouchDirection(view: View, event: MotionEvent): Int {
-        val x = event.x / view.width
-        val y = event.y / view.height
-        val direction: Int = if (y > x) {
-            if (x > 1 - y) 2 else 0
-        } else {
-            if (x > 1 - y) 3 else 1
-        }
-        return direction
     }
 
     private fun initCallbackScore() {
